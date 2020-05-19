@@ -1,0 +1,37 @@
+что такое classpath? это папка с ресурсами?
+не работает log.info
+Как сделать sql show в hibernate?
+
+Я сохраняю объект без id, но каким образом, когда я возврашаю объект у него появляется id?
+вот кусок кода:
+public String add(Ship ship){
+        if (!(smthNot(ship).equals("")))
+            return "{\"Error\":\"" + smthNot(ship) + "\"}";
+
+        ship.setRating(ship.countRating());
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        //log.info("IN add - ship: {}", ship);
+        session.save(ship);
+        session.flush();
+        session.close();
+        return gson.toJson(ship);
+    }
+    и этот метод вернет ship уже с id, это благодаря тому что объект хранится в кеше Hibernate?
+    Ответ:Объект Session кэширует у себя загруженные объекты; при загрузке объекта из БД в первую очередь проверяется кэш.
+    Для того, чтобы удалить объект из кэша и отсоединить от сессии, используется session.evict(Object). Метод session.clear()
+    применит evict() ко всем объектам в сессии. <- кешируется на первом уровне Hibernate я так понимаю?
+
+В задании сказано отвечать на ошибки статусами http 400, 404 и тд, как это делать если я оспльзую json, а не responseEntity
+
+Думаю я не правильно достаю параметры из url. как их правильно доставать, если я не знаю, что там будет указано?  к примеру :
+name=vasya или speed =0.5
+Как сделать пейджинг без view?
+session потокобезопасный?
+
+Правильный ли метод delete
+Почему, если не передаем никакого значения, то не отрабатывает if (id == null)
+Правильный ли метод add
+
+добавить bean shiphelper
+xml конфигурация
